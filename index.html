@@ -202,13 +202,12 @@ function RegisterPage({ onSwitchLogin }) {
     const role = isDocente ? "docente" : "studente";
 
     // 1. Crea l'utente in Supabase Auth
-    const { data, error } = await supabase.auth.signUp({ email: email.trim().toLowerCase(), password: pass });
+   const { data, error } = await supabase.auth.signUp({ 
+      email: email.trim().toLowerCase(), 
+      password: pass,
+      options: { data: { role } }
+    });
     if (error) { setErr(error.message); setLoading(false); return; }
-
-    // 2. Crea il profilo nella tabella profiles
-    if (data.user) {
-      await supabase.from("profiles").insert({ email: data.user.email, role, user_id: data.user.id });
-    }
 
     setDone(true);
     setLoading(false);
