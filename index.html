@@ -207,7 +207,7 @@ function RegisterPage({ onSwitchLogin }) {
 
     // 2. Crea il profilo nella tabella profiles
     if (data.user) {
-      await supabase.from("profiles").insert({ email: data.user.email, role });
+      await supabase.from("profiles").insert({ email: data.user.email, role, user_id: data.user.id });
     }
 
     setDone(true);
